@@ -1,11 +1,230 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Anıl Tan Aktan — Personal Website</title>
-  </head>
-  <body>
-    <h1>Hello! I’m Anıl Tan Aktan 👋</h1>
-    <p>This is my personal website for projects and hobbies.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gökdeniz Çağlayan — Character Sheet</title>
+  <meta name="description" content="TTRPG character‑sheet style homepage for projects and hobbies." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: #111827;     /* slate‑900 */
+      --paper: #0f172a;     /* slate‑800 */
+      --ink: #e2e8f0;       /* slate‑200 */
+      --muted: #94a3b8;     /* slate‑400 */
+      --border: #1f2a44;    /* custom */
+      --accent: #22c55e;    /* green‑500 */
+      --accent-2: #60a5fa;  /* blue‑400 */
+      --danger: #ef4444;    /* red‑500 */
+      --mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f8fafc; --panel:#ffffff; --paper:#f1f5f9; --ink:#0f172a; --muted:#475569; --border:#e2e8f0;
+      }
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:
+      radial-gradient(1200px 700px at -10% -20%, #0ea5e9 0%, transparent 60%),
+      radial-gradient(900px 600px at 110% -10%, #22c55e 0%, transparent 55%),
+      var(--bg);
+      color:var(--ink); font-family:var(--sans); line-height:1.6}
+    a{color:var(--accent-2); text-decoration:none}
+    a:hover{opacity:.9}
+
+    /* Layout */
+    header{position:sticky;top:0;backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border);
+      background: color-mix(in oklab, var(--paper) 85%, transparent);}
+    nav{max-width:1100px; margin:0 auto; padding:.75rem 1rem; display:flex; align-items:center; justify-content:space-between}
+    .brand{display:flex; gap:.75rem; align-items:center; font-weight:800; color:var(--ink)}
+    .die{width:.9rem;height:.9rem;border:2px solid var(--accent-2);border-radius:.2rem; display:grid; place-items:center; font-family:var(--mono); font-size:.65rem}
+    .container{max-width:1100px; margin:0 auto; padding:1.25rem}
+
+    /* Character Sheet */
+    .sheet{display:grid; grid-template-columns: 320px 1fr; gap:1.25rem;}
+    @media (max-width: 880px){ .sheet{grid-template-columns:1fr} }
+
+    .card{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 85%, transparent), var(--paper));
+      border:1px solid var(--border); border-radius:1rem; box-shadow: 0 10px 30px -20px rgba(0,0,0,.5)}
+    .card .pad{padding:1rem}
+    .card h2{font-size:1rem; letter-spacing:.2px; margin:.25rem 0 .75rem; display:flex; align-items:center; gap:.5rem}
+    .pip{width:.55rem; height:.55rem; border-radius:999px; background:var(--accent)}
+
+    .identity{display:grid; grid-template-columns: 72px 1fr; gap:1rem; align-items:center}
+    .avatar{width:72px; height:72px; border-radius:.75rem; border:1px dashed var(--border); display:grid; place-items:center; font-size:1.8rem}
+    .meta{color:var(--muted); font-size:.9rem}
+
+    .attrs{display:grid; grid-template-columns: repeat(3, 1fr); gap:.5rem}
+    .attr{border:1px dashed var(--border); border-radius:.6rem; padding:.6rem; text-align:center}
+    .attr .lbl{font-size:.7rem; color:var(--muted)}
+    .attr .val{font-family:var(--mono); font-size:1.2rem}
+
+    .skills .tag{display:inline-block; border:1px solid var(--border); padding:.2rem .5rem; border-radius:.5rem; background: color-mix(in oklab, var(--paper) 70%, transparent); margin:.15rem .3rem .15rem 0; font-size:.8rem}
+    .section-title{display:flex; align-items:center; gap:.6rem; font-weight:800; margin:.25rem 0 1rem}
+
+    .grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem}
+    .proj h3{margin:.35rem 0 .25rem; font-size:1.05rem}
+    .proj .meta{margin-bottom:.25rem}
+
+    .inventory{display:grid; grid-template-columns: repeat(2, 1fr); gap:.5rem}
+    @media (max-width:640px){ .inventory{grid-template-columns:1fr} }
+    .slot{border:1px dashed var(--border); border-radius:.6rem; padding:.6rem; display:flex; align-items:center; gap:.6rem}
+    .slot .emoji{font-size:1.2rem}
+
+    .footer{color:var(--muted); font-size:.9rem; padding:1rem 0 3rem; border-top:1px solid var(--border)}
+
+    .btn{display:inline-flex; align-items:center; gap:.5rem; border:1px solid var(--border); background: color-mix(in oklab, var(--paper) 70%, transparent); padding:.45rem .75rem; border-radius:.6rem; cursor:pointer}
+    .btn:focus{outline:2px solid var(--accent-2); outline-offset:2px}
+    .mono{font-family:var(--mono)}
+    .small{font-size:.85rem}
+  </style>
+</head>
+<body>
+  <a class="visually-hidden" href="#main">Skip to content</a>
+  <header>
+    <nav aria-label="Primary">
+      <div class="brand"><span class="die" aria-hidden="true">d20</span> Gökdeniz Çağlayan</div>
+      <div style="display:flex; gap:.85rem; align-items:center">
+        <a href="#projects">Projects</a>
+        <a href="#hobbies">Hobbies</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="container">
+    <section class="sheet" aria-label="Character Sheet">
+      <!-- Left column: Identity & stats -->
+      <aside class="card">
+        <div class="pad">
+          <h2><span class="pip"></span> Adventurer</h2>
+          <div class="identity">
+            <div class="avatar" aria-hidden="true">🎲</div>
+            <div>
+              <div style="font-weight:800; font-size:1.2rem">Gökdeniz Çağlayan</div>
+              <div class="meta">Class: <strong>Deep Learning Engineer</strong> · Alignment: <strong>Chaotic Good</strong></div>
+              <div class="meta">Homeland: İstanbul · Languages: Python, PyTorch, English, Turkish</div>
+            </div>
+          </div>
+
+          <div style="margin:.9rem 0 .5rem; font-weight:800" class="small">Attributes</div>
+          <div class="attrs" role="list">
+            <div class="attr" role="listitem"><div class="lbl">INT</div><div class="val">18</div></div>
+            <div class="attr" role="listitem"><div class="lbl">WIS</div><div class="val">14</div></div>
+            <div class="attr" role="listitem"><div class="lbl">CHA</div><div class="val">12</div></div>
+            <div class="attr" role="listitem"><div class="lbl">STR</div><div class="val">10</div></div>
+            <div class="attr" role="listitem"><div class="lbl">DEX</div><div class="val">13</div></div>
+            <div class="attr" role="listitem"><div class="lbl">CON</div><div class="val">12</div></div>
+          </div>
+
+          <div style="margin:1rem 0 .4rem; font-weight:800" class="small">Proficiencies</div>
+          <div class="skills">
+            <span class="tag">Computer Vision</span>
+            <span class="tag">Bioinformatics</span>
+            <span class="tag">Model Ensembling</span>
+            <span class="tag">Class Imbalance</span>
+            <span class="tag">Visualization</span>
+            <span class="tag">MLOps (Colab)</span>
+          </div>
+
+          <div style="display:flex; gap:.5rem; margin-top:1rem">
+            <button class="btn" id="rollBtn" aria-label="Roll a d20 for a random fact"><span class="die" aria-hidden="true">d20</span> Roll Fun Fact</button>
+            <span id="rollOut" class="mono small" aria-live="polite"></span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right column: Content -->
+      <section class="card" id="projects">
+        <div class="pad">
+          <h2 class="section-title"><span class="pip"></span> Quests · Projects</h2>
+          <div class="grid">
+            <article class="proj">
+              <div class="mono small meta">#001 · ML · Research</div>
+              <h3>BBB‑Peptide Discovery Toolkit</h3>
+              <p class="meta">Phage display · Motif enrichment · UpSet plots</p>
+              <p>Parsing rounds, computing enrichment, and rendering publication/patent‑ready figures (logos, UpSet, frequency bars).</p>
+              <p><a href="#">GitHub →</a></p>
+            </article>
+            <article class="proj">
+              <div class="mono small meta">#002 · CV · Ensemble</div>
+              <h3>Skin Lesion Multi‑Branch Ensemble</h3>
+              <p class="meta">EfficientNet‑B5 · ViT · MambaVision · Focal Loss</p>
+              <p>Within‑network ensemble with TTA; exports ISIC‑ready CSVs and class‑distribution dashboards.</p>
+              <p><a href="#">GitHub →</a></p>
+            </article>
+            <article class="proj">
+              <div class="mono small meta">#003 · Tools</div>
+              <h3>Notebook to Paper</h3>
+              <p class="meta">LaTeX · IEEE · Reproducibility</p>
+              <p>CLI to promote figures/tables from notebooks into clean, citable paper sections with consistent styling.</p>
+              <p><a href="#">Docs →</a></p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="hobbies">
+        <div class="pad">
+          <h2 class="section-title"><span class="pip"></span> Inventory · Hobbies</h2>
+          <div class="inventory">
+            <div class="slot"><span class="emoji" aria-hidden="true">🧙‍♂️</span> TTRPG GM · one‑shots & homebrew</div>
+            <div class="slot"><span class="emoji" aria-hidden="true">🎲</span> Boardgames · Five Tribes, deck‑builders</div>
+            <div class="slot"><span class="emoji" aria-hidden="true">🕹️</span> Retro handheld · R36S · PSP/PS2 era</div>
+            <div class="slot"><span class="emoji" aria-hidden="true">⚔️</span> Warhammer 40K · Ultramarines tactics</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="about">
+        <div class="pad">
+          <h2 class="section-title"><span class="pip"></span> Lore · About</h2>
+          <p>I’m a Deep Learning Engineer focused on computer vision and computational biology. I like building robust ensembles, visual analytics, and tools that make research reproducible. When the dice hit the table, I’m usually GMing cinematic one‑shots or optimizing worker placement.</p>
+        </div>
+      </section>
+
+      <section class="card" id="contact">
+        <div class="pad">
+          <h2 class="section-title"><span class="pip"></span> Send a Raven · Contact</h2>
+          <p class="meta">Best way to reach me:</p>
+          <p>✉️ <a href="mailto:hello@example.com">hello@example.com</a> · <a href="#">GitHub</a> · <a href="#">LinkedIn</a></p>
+        </div>
+      </section>
+    </section>
+
+    <section class="footer">
+      <div class="mono small">© <span id="year"></span> Gökdeniz Çağlayan · Built as a static site · Hosted on GitHub Pages</div>
+    </section>
+  </main>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Fun fact roller
+    const facts = [
+      "Rolled a nat 20 on debugging a CUDA kernel.",
+      "Once beat a boss with a single HP and a spicy strat.",
+      "Prefers macro‑F1 over accuracy when classes are imbalanced.",
+      "Believes UpSet plots are S‑tier for set intersections.",
+      "GM rule: the coolest idea at the table gets +2 advantage.",
+      "Ultramarines: 'Only in death does duty end.'",
+      "Retro tip: PSP Ridge Racer time‑trial clears are therapy.",
+    ];
+    const rollBtn = document.getElementById('rollBtn');
+    const rollOut = document.getElementById('rollOut');
+    rollBtn?.addEventListener('click', () => {
+      const i = Math.floor(Math.random() * facts.length);
+      const n = Math.floor(Math.random() * 20) + 1; // d20
+      rollOut.textContent = `d20 → ${String(n).padStart(2,'0')} · ${facts[i]}`;
+      rollOut.style.color = n === 20 ? 'var(--accent)' : (n === 1 ? 'var(--danger)' : 'var(--ink)');
+    });
+  </script>
+</body>
 </html>
